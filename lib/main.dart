@@ -7,6 +7,8 @@ import 'package:amazon_clone_tutorial/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'common/widgets/bottom_bar.dart';
+
 void main() {
   runApp(MultiProvider(
     providers: [
@@ -50,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }

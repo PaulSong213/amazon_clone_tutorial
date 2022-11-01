@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common/widgets/bottom_bar.dart';
 import '../../../constants/global_variables.dart';
 
 class AuthService {
@@ -84,7 +85,7 @@ class AuthService {
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             Navigator.pushNamedAndRemoveUntil(
               context,
-              HomeScreen.routeName,
+              BottomBar.routeName,
               (route) => false,
             );
           });
