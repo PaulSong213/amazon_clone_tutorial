@@ -1,5 +1,6 @@
 import 'package:amazon_clone_tutorial/constants/global_variables.dart';
 import 'package:amazon_clone_tutorial/features/account/widgets/below_app_bar.dart';
+import 'package:amazon_clone_tutorial/features/account/widgets/orders.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/top_buttons.dart';
@@ -51,6 +52,8 @@ class AccountScreen extends StatelessWidget {
             BellowAppBar(),
             SizedBox(height: 10),
             TopButtons(),
+            SizedBox(height: 20),
+            Orders(),
           ],
         ));
   }
