@@ -1,6 +1,7 @@
 const express = require('express');
 const adminRouter = express.Router();
 const admin = require('../middlewares/admin');
+const { find } = require('../models/product');
 const Product = require('../models/product');
 // Add product
 adminRouter.post('/admin/add-product', admin, async(req, res) => {
@@ -20,5 +21,16 @@ adminRouter.post('/admin/add-product', admin, async(req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Get all products
+adminRouter.post('/admin/get-products', admin, async(req, res) => {
+    try {
+        const products = await Product.find({});
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 module.exports = adminRouter;

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:amazon_clone_tutorial/constants/error_handling.dart';
 import 'package:amazon_clone_tutorial/constants/utils.dart';
@@ -15,8 +16,8 @@ class AdminServices {
     required BuildContext context,
     required String name,
     required String description,
-    required double price,
-    required double quantity,
+    required int price,
+    required int quantity,
     required String category,
     required List<File> images,
   }) async {
@@ -60,5 +61,32 @@ class AdminServices {
     } catch (e) {
       showSnackbar(context, e.toString());
     }
+  }
+
+  // get all the products
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Product> productList = [];
+    try {
+      http.Response res =
+          await http.post(Uri.parse('$uri/admin/get-products'), headers: {
+        'Content-Type': 'application/json; chartset=UTF-8',
+        'x-auth-token': userProvider.user.token,
+      });
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            var product = Product.fromJson(jsonEncode(jsonDecode(res.body)[i]));
+            productList.add(product);
+          }
+        },
+      );
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+    return productList;
   }
 }
