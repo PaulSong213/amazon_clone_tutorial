@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:amazon_clone_tutorial/models/rating.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Product {
   final String name;
@@ -9,6 +11,7 @@ class Product {
   final String category;
   final int price;
   final String? id;
+  final List<Rating>? rating;
   Product({
     required this.name,
     required this.description,
@@ -17,6 +20,7 @@ class Product {
     required this.category,
     required this.price,
     this.id,
+    this.rating,
   });
   //rating
 
@@ -29,20 +33,29 @@ class Product {
       'category': category,
       'price': price,
       'id': id,
+      'rating': rating,
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-        price: map['price'] as int,
-        id: map['_id'] != null ? map['_id'] as String : null,
-        category: map['category'] as String,
-        name: map['name'] as String,
-        description: map['description'] as String,
-        quantity: map['quantity'] as int,
-        images: List<dynamic>.from(
-          (map['images'] as List<dynamic>),
-        ));
+      price: map['price'] as int,
+      id: map['_id'] != null ? map['_id'] as String : null,
+      category: map['category'] as String,
+      name: map['name'] as String,
+      description: map['description'] as String,
+      quantity: map['quantity'] as int,
+      images: List<dynamic>.from(
+        (map['images'] as List<dynamic>),
+      ),
+      rating: map['ratings'] != null
+          ? List<Rating>.from(
+              map['ratings']?.map(
+                (x) => Rating.fromMap(x),
+              ),
+            )
+          : null,
+    );
   }
 
   String toJson() => json.encode(toMap());
