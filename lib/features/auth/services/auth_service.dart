@@ -31,6 +31,7 @@ class AuthService {
         address: "",
         type: "",
         token: "",
+        cart: [],
       );
 
       http.Response res = await http.post(
@@ -62,13 +63,15 @@ class AuthService {
   }) async {
     try {
       User user = User(
-          id: "",
-          name: "",
-          email: email,
-          password: password,
-          address: "",
-          type: "",
-          token: "");
+        id: "",
+        name: "",
+        email: email,
+        password: password,
+        address: "",
+        type: "",
+        token: "",
+        cart: [],
+      );
 
       http.Response res = await http.post(Uri.parse('$uri/api/signin'),
           body: user.toJson(),
