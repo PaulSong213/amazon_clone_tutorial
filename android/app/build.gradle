@@ -47,7 +47,7 @@ android {
         applicationId "com.example.amazon_clone_tutorial"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -67,6 +67,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-wallet:19.1.0'
     implementation "androidx.activity:activity:1.6.0-alpha05"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
