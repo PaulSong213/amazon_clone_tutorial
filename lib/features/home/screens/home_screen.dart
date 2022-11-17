@@ -1,4 +1,5 @@
 import 'package:amazon_clone_tutorial/features/home/widgets/address_box.dart';
+import 'package:amazon_clone_tutorial/features/home/widgets/all_product.dart';
 import 'package:amazon_clone_tutorial/features/home/widgets/carousel_image.dart';
 import 'package:amazon_clone_tutorial/features/home/widgets/deal_of_day.dart';
 import 'package:amazon_clone_tutorial/features/home/widgets/top_categories.dart';
@@ -101,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TopCategories(),
             CarouselImage(),
             DealOfDay(),
+            AllProduct(),
           ],
         ),
       ),

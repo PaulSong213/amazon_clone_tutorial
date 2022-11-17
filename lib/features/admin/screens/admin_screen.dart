@@ -1,10 +1,15 @@
+import 'package:amazon_clone_tutorial/common/widgets/custom_button.dart';
+import 'package:amazon_clone_tutorial/features/admin/screens/analytics_screen.dart';
 import 'package:amazon_clone_tutorial/features/admin/screens/orders_screen.dart';
 import 'package:amazon_clone_tutorial/features/admin/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/global_variables.dart';
+import '../../account/services/account_services.dart';
+import '../../account/widgets/account_button.dart';
 
 class AdminScreen extends StatefulWidget {
+  static const String routeName = '/admin';
   const AdminScreen({super.key});
 
   @override
@@ -18,7 +23,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const PostsScreen(),
-    const Center(child: Text('Analytics Page')),
+    const AnalyticsScreen(),
     const OrdersScreen(),
   ];
 
@@ -41,13 +46,14 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 alignment: Alignment.topLeft,
                 child: Image.asset(
                   'assets/images/amazon_in.png',
-                  width: 120,
-                  height: 45,
+                  width: 100,
+                  height: 25,
                   color: Colors.black,
                 ),
               ),
@@ -57,7 +63,12 @@ class _AdminScreenState extends State<AdminScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
-              )
+              ),
+              SizedBox(
+                child: AccountButton(
+                    text: "Log Out",
+                    onTap: () => AccountServices().logOut(context)),
+              ),
             ],
           ),
         ),

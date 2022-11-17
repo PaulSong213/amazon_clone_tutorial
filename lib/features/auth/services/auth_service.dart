@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:amazon_clone_tutorial/constants/error_handling.dart';
 import 'package:amazon_clone_tutorial/constants/utils.dart';
+import 'package:amazon_clone_tutorial/features/admin/screens/admin_screen.dart';
+import 'package:amazon_clone_tutorial/features/admin/screens/analytics_screen.dart';
 import 'package:amazon_clone_tutorial/features/home/screens/home_screen.dart';
 import 'package:amazon_clone_tutorial/models/user.dart';
 import 'package:amazon_clone_tutorial/providers/user_provider.dart';
@@ -13,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/widgets/bottom_bar.dart';
 import '../../../constants/global_variables.dart';
+import '../../admin/screens/add_product_screen.dart';
 
 class AuthService {
   // sign up user
@@ -86,11 +89,20 @@ class AuthService {
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              BottomBar.routeName,
-              (route) => false,
-            );
+            var isAdmin = jsonDecode(res.body)['type'] == "admin";
+            if (isAdmin) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AdminScreen.routeName,
+                (route) => false,
+              );
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                BottomBar.routeName,
+                (route) => false,
+              );
+            }
           });
     } catch (e) {
       showSnackbar(context, e.toString());

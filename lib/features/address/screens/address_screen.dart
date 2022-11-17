@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone_tutorial/common/widgets/custom_button.dart';
 import 'package:amazon_clone_tutorial/constants/utils.dart';
 import 'package:amazon_clone_tutorial/features/address/services/address_services.dart';
 import 'package:flutter/material.dart';
@@ -165,6 +166,10 @@ class _AddressScreenState extends State<AddressScreen> {
                     ),
                   ],
                 ),
+              ),
+              CustomButton(
+                text: 'Fake Buy',
+                onTap: () => payPressed(address),
               ),
               GooglePayButton(
                 onPressed: () => payPressed(address),

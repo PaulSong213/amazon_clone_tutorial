@@ -64,4 +64,30 @@ class HomeServices {
     }
     return product;
   }
+
+  Future<List<Product>> fetchAllProduct({required BuildContext context}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Product> productList = [];
+    try {
+      http.Response res =
+          await http.get(Uri.parse('$uri/api/products/all'), headers: {
+        'Content-Type': 'application/json; chartset=UTF-8',
+        'x-auth-token': userProvider.user.token,
+      });
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            var product = Product.fromJson(jsonEncode(jsonDecode(res.body)[i]));
+            productList.add(product);
+          }
+        },
+      );
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+    return productList;
+  }
 }

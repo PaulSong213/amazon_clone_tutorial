@@ -67,5 +67,53 @@ adminRouter.post('/admin/change-order-status', admin, async(req, res) => {
     }
 });
 
+adminRouter.get('/admin/analytics', async(req, res) => {
+    try {
+        const orders = await Order.find({});
+        let totalEarnings = 0;
+
+        for (let i = 0; i < orders.length; i++) {
+            totalEarnings += orders[i]['totalPrice'];
+        }
+
+        //Category wide order fetching
+        let mobilesEarnings = await fetchCategoryWideProduct('Mobiles');
+        let essentialsEarnings = await fetchCategoryWideProduct('Essentials');
+        let appliancesEarnings = await fetchCategoryWideProduct('Appliances');
+        let booksEarnings = await fetchCategoryWideProduct('Books');
+        let fashionEarnings = await fetchCategoryWideProduct('Fashion');
+
+        let earnings = {
+            totalEarnings,
+            mobilesEarnings,
+            essentialsEarnings,
+            appliancesEarnings,
+            booksEarnings,
+            fashionEarnings,
+        }
+
+        res.json(earnings);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+async function fetchCategoryWideProduct(category) {
+    let earnings = 0;
+    let categoryOrders = await Order.find({
+        'orders.product.category': category,
+    });
+    for (let i = 0; i < categoryOrders.length; i++) {
+        let orders = categoryOrders[i].orders;
+        for (let j = 0; j < orders.length; j++) {
+            let product = orders[j].product;
+            let order = orders[j];
+            earnings += order.quantity * product.price;
+        }
+    }
+    return earnings;
+}
+
 
 module.exports = adminRouter;
